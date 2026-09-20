@@ -10,7 +10,7 @@ export default function StudentList({ showToast }) {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDept, setSelectedDept] = useState('ALL');
-  
+
   // Modal state
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, studentId: null, studentName: '' });
   const navigate = useNavigate();

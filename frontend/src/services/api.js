@@ -8,11 +8,22 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// Response interceptor for consistent error handling
+// Request interceptor to automatically attach JWT token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('sms_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor for standardized error handling and 401 management
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Standardize error message from backend
     let message = 'An unexpected error occurred. Please try again.';
     let validationErrors = null;
 
@@ -23,6 +34,15 @@ api.interceptors.response.use(
       }
       if (data && data.validationErrors) {
         validationErrors = data.validationErrors;
+      }
+
+      // If unauthorized on a protected endpoint, clear saved token
+      if (error.response.status === 401 && !error.config.url.includes('/auth/login')) {
+        localStorage.removeItem('sms_token');
+        localStorage.removeItem('sms_user');
+        if (!window.location.pathname.includes('/login')) {
+          window.location.href = '/login';
+        }
       }
     } else if (error.request) {
       message = 'Cannot reach backend server. Please make sure Spring Boot is running on port 8085.';
