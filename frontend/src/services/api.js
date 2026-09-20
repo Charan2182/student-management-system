@@ -1,11 +1,13 @@
 import axios from 'axios';
 
+const PROD_URL = 'https://student-management-system-1-ycb3.onrender.com/api/v1';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8085/api/v1',
+  baseURL: import.meta.env.VITE_API_BASE_URL || PROD_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  timeout: 60000,
 });
 
 // Request interceptor to automatically attach JWT token
@@ -44,8 +46,10 @@ api.interceptors.response.use(
           window.location.href = '/login';
         }
       }
+    } else if (error.code === 'ECONNABORTED' || (error.message && error.message.includes('timeout'))) {
+      message = 'Request timed out. The server may be waking up from sleep. Please wait 15 seconds and try again.';
     } else if (error.request) {
-      message = 'Cannot reach backend server. Please make sure Spring Boot is running on port 8085.';
+      message = 'Unable to connect to the backend server. Please check your internet connection or try again in a few moments.';
     }
 
     const customError = new Error(message);
