@@ -33,8 +33,8 @@ public class StudentRequestDTO {
     @Pattern(regexp = "^(ACTIVE|INACTIVE|GRADUATED|SUSPENDED)$", message = "Status must be ACTIVE, INACTIVE, GRADUATED, or SUSPENDED")
     private String status = "ACTIVE";
 
-    @Min(value = 0, message = "GPA cannot be less than 0.0")
-    @Max(value = 4, message = "GPA cannot exceed 4.0")
+    @Min(value = 1, message = "GPA cannot be less than 1.0")
+    @Max(value = 10, message = "GPA cannot exceed 10.0")
     private Double gpa;
 
     public StudentRequestDTO() {

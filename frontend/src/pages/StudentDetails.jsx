@@ -10,7 +10,6 @@ export default function StudentDetails({ showToast }) {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState(false);
-
   useEffect(() => {
     const fetchStudent = async () => {
       try {

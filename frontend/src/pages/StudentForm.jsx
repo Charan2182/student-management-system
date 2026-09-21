@@ -80,8 +80,8 @@ export default function StudentForm({ showToast }) {
 
     if (formData.gpa) {
       const gpaNum = parseFloat(formData.gpa);
-      if (isNaN(gpaNum) || gpaNum < 0 || gpaNum > 4.0) {
-        newErrors.gpa = 'GPA must be a number between 0.0 and 4.0';
+      if (isNaN(gpaNum) || gpaNum < 1.0 || gpaNum > 10.0) {
+        newErrors.gpa = 'GPA must be a number between 1.00 and 10.00';
       }
     }
 
@@ -244,15 +244,15 @@ export default function StudentForm({ showToast }) {
 
             {/* GPA */}
             <div className="form-group">
-              <label className="form-label">GPA (0.00 - 4.00)</label>
+              <label className="form-label">GPA (1.00 - 10.00)</label>
               <input
                 type="number"
                 step="0.01"
-                min="0"
-                max="4"
+                min="1"
+                max="10"
                 name="gpa"
                 className={`form-control ${errors.gpa ? 'is-invalid' : ''}`}
-                placeholder="e.g. 3.75"
+                placeholder="e.g. 8.50"
                 value={formData.gpa}
                 onChange={handleChange}
               />
