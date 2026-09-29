@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class StudentControllerTest {
 
     @Autowired
@@ -38,7 +38,7 @@ public class StudentControllerTest {
     @Test
     void shouldCreateStudentSuccessfully() throws Exception {
         StudentRequestDTO request = new StudentRequestDTO(
-                "John", "Doe", "john.doe@example.com", "Computer Science",
+                "John", "Doe", "john.doe@gmail.com", "Computer Science",
                 "+1234567890", LocalDate.of(2000, 1, 15), LocalDate.of(2022, 9, 1),
                 "ACTIVE", 3.8
         );
@@ -50,14 +50,14 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$.success", is(true)))
                 .andExpect(jsonPath("$.data.id", notNullValue()))
                 .andExpect(jsonPath("$.data.firstName", is("John")))
-                .andExpect(jsonPath("$.data.email", is("john.doe@example.com")))
+                .andExpect(jsonPath("$.data.email", is("john.doe@gmail.com")))
                 .andExpect(jsonPath("$.data.department", is("Computer Science")));
     }
 
     @Test
     void shouldReturnConflictWhenEmailAlreadyExists() throws Exception {
         StudentRequestDTO firstStudent = new StudentRequestDTO(
-                "Alice", "Smith", "alice.smith@example.com", "Mathematics",
+                "Alice", "Smith", "alice.smith@gmail.com", "Mathematics",
                 "+1987654321", LocalDate.of(2001, 5, 20), LocalDate.of(2023, 9, 1),
                 "ACTIVE", 3.9
         );
@@ -69,7 +69,7 @@ public class StudentControllerTest {
 
         // Attempt to create another student with same email
         StudentRequestDTO duplicateStudent = new StudentRequestDTO(
-                "Bob", "Smith", "alice.smith@example.com", "Physics",
+                "Bob", "Smith", "alice.smith@gmail.com", "Physics",
                 "+1122334455", LocalDate.of(2002, 3, 10), LocalDate.of(2023, 9, 1),
                 "ACTIVE", 3.5
         );
@@ -102,11 +102,11 @@ public class StudentControllerTest {
     @Test
     void shouldGetAllStudentsAndFilter() throws Exception {
         StudentRequestDTO student1 = new StudentRequestDTO(
-                "Emily", "Clark", "emily.clark@example.com", "Computer Science",
+                "Emily", "Clark", "emily.clark@gmail.com", "Computer Science",
                 null, null, null, "ACTIVE", 3.7
         );
         StudentRequestDTO student2 = new StudentRequestDTO(
-                "Michael", "Brown", "michael.brown@example.com", "Electrical Engineering",
+                "Michael", "Brown", "michael.brown@gmail.com", "Electrical Engineering",
                 null, null, null, "ACTIVE", 3.4
         );
 
