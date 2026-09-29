@@ -219,14 +219,21 @@ export default function StudentForm({ showToast }) {
               <label className="form-label">
                 Department / Major <span className="required">*</span>
               </label>
-              <input
-                type="text"
+              <select
                 name="department"
                 className={`form-control ${errors.department ? 'is-invalid' : ''}`}
-                placeholder="e.g. Computer Science, Mechanical Eng."
                 value={formData.department}
                 onChange={handleChange}
-              />
+              >
+                <option value="">Select a department...</option>
+                <option value="Computer Science Engineering">Computer Science Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Business Administration">Business Administration</option>
+              </select>
               {errors.department && <span className="invalid-feedback">{errors.department}</span>}
             </div>
 
