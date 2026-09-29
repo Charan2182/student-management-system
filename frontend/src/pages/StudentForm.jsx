@@ -68,6 +68,8 @@ export default function StudentForm({ showToast }) {
       newErrors.email = 'Email address is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = 'Please provide a valid email address';
+    } else if (!formData.email.trim().toLowerCase().endsWith('@gmail.com')) {
+      newErrors.email = 'Only Google mail IDs (@gmail.com) are allowed';
     }
 
     if (!formData.department.trim()) {

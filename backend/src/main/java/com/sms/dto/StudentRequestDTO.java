@@ -15,6 +15,7 @@ public class StudentRequestDTO {
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Please provide a valid email address")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@gmail\\.com$", message = "Only Google mail IDs (@gmail.com) are allowed")
     @Size(max = 100, message = "Email cannot exceed 100 characters")
     private String email;
 
